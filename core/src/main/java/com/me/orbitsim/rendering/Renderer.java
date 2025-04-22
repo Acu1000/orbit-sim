@@ -4,15 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
+import com.me.orbitsim.core.IRenderListener;
 
-public class Renderer {
+public class Renderer implements IRenderListener {
 
     private static final Renderer INSTANCE = new Renderer();
 
     private Renderer() {
         System.out.println("AAAAA");
-        camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.position.set(0, 0, 0);
     }
 
     public static Renderer getInstance() {
@@ -20,16 +19,16 @@ public class Renderer {
     }
 
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
-    private final OrthographicCamera camera = new OrthographicCamera();
+    private final CameraHandler camera = new CameraHandler();
 
     private final Array<IRenderable> renderables = new Array<>();
 
 
-    public void render(double dt) {
+    public void onRender(double dt) {
 
-        camera.update();
+        camera.onRender(dt);
 
-        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(camera.getMatrix());
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         for (IRenderable renderable : renderables) {

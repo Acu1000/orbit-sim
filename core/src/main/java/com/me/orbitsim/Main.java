@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import com.me.orbitsim.core.EventManager;
 import com.me.orbitsim.entities.SimpleCelestialBody;
 import com.me.orbitsim.rendering.Renderer;
 import com.me.orbitsim.simulation.CelestialBody;
@@ -24,6 +25,9 @@ public class Main extends ApplicationAdapter {
     public void create() {
         simulation = Simulation.getInstance();
         renderer = Renderer.getInstance();
+
+        EventManager.addRenderListener(renderer);
+        EventManager.addRenderListener(simulation);
 
         double m = 1e16;
 
@@ -68,9 +72,16 @@ public class Main extends ApplicationAdapter {
         ScreenUtils.clear(Color.BLACK);
 
         double dt = Gdx.graphics.getDeltaTime();
-        simulation.onRender(dt);
+        EventManager.onRender(dt);
 
-        renderer.render(dt);
+        //simulation.onRender(dt);
 
+        //renderer.render(dt);
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        EventManager.onResize(width, height);
     }
 }

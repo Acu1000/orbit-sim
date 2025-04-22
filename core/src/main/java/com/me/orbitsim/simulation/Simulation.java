@@ -1,8 +1,9 @@
 package com.me.orbitsim.simulation;
 
 import com.badlogic.gdx.utils.Array;
+import com.me.orbitsim.core.IRenderListener;
 
-public final class Simulation {
+public final class Simulation implements IRenderListener {
 
     public static final double GRAVITY_CONSTANT = 0.000000000066743;
 
@@ -14,10 +15,10 @@ public final class Simulation {
         return INSTANCE;
     }
 
-    private Array<ISimulationObject> simulationObjects = new Array<>();
-    private Array<IGravitySource> gravitySources = new Array<>();
+    private final Array<ISimulationObject> simulationObjects = new Array<>();
+    private final Array<IGravitySource> gravitySources = new Array<>();
 
-    public double timeScale = 1.0;
+    public double timeScale = 2.0;
     public double timeStep = 1.0 / 60.0;
     public double soften = 1e-3;
 
