@@ -4,6 +4,8 @@ import com.me.orbitsim.math.Vector2;
 
 public class CelestialBody implements IGravitySource, ISimulationObject {
 
+    protected Simulation simulation = Simulation.getInstance();
+
     protected String name;
     protected Vector2 position = new Vector2();
     protected Vector2 velocity = new Vector2();
@@ -14,7 +16,22 @@ public class CelestialBody implements IGravitySource, ISimulationObject {
 
     @Override
     public void simulationStep(double dt) {
+        for (IGravitySource gravitySource : simulation.getGravitySources()) {
+            if (gravitySource.equals(this)) {
+                continue;
+            }
+            double dist = position.distance(gravitySource.getPosition());
 
+            double force = mass
+                * gravitySource.getMass()
+                * dist
+                * Simulation.GRAVITY_CONSTANT
+                / Math.pow(dist*dist + simulation.soften * simulation.soften, 1.5);
+
+            Vector2 dv = gravitySource.getPosition().subtract(position).set_magnitude(force * dt / mass);
+            velocity = velocity.add(dv);
+        }
+        position = position.add(velocity.multiply(dt));
     }
 
     @Override

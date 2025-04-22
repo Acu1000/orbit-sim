@@ -25,23 +25,42 @@ public class Main extends ApplicationAdapter {
         simulation = Simulation.getInstance();
         renderer = Renderer.getInstance();
 
+        double m = 1e16;
+
+        simulation.timeScale = 1;
+        simulation.soften = 100;
+
         SimpleCelestialBody planet1 = (SimpleCelestialBody) new SimpleCelestialBody()
             .setColor(Color.ORANGE)
             .setName("Planet 1")
-            .setMass(10)
-            .setRadius(30)
-            .setPosition(0, 0);
+            .setMass(m)
+            .setRadius(5)
+            .setPosition(0, 0)
+            .setVelocity(0, 0);
         simulation.addSimulationObject(planet1);
         renderer.addRenderable(planet1);
 
         SimpleCelestialBody planet2 = (SimpleCelestialBody) new SimpleCelestialBody()
             .setColor(Color.YELLOW)
             .setName("Planet 2")
-            .setMass(10)
-            .setRadius(50)
-            .setPosition(100, 0);
+            .setMass(m)
+            .setRadius(5)
+            .setPosition(100, 0)
+            .setVelocity(0, 50);
         simulation.addSimulationObject(planet2);
         renderer.addRenderable(planet2);
+
+        SimpleCelestialBody planet3 = (SimpleCelestialBody) new SimpleCelestialBody()
+            .setColor(Color.GREEN)
+            .setName("Planet 3")
+            .setMass(m)
+            .setRadius(5)
+            .setPosition(-100, 0)
+            .setVelocity(0, -50);
+        simulation.addSimulationObject(planet3);
+        renderer.addRenderable(planet3);
+
+        //simulation.step();
     }
 
     @Override

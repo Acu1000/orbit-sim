@@ -4,6 +4,8 @@ import com.badlogic.gdx.utils.Array;
 
 public final class Simulation {
 
+    public static final double GRAVITY_CONSTANT = 0.000000000066743;
+
     private static final Simulation INSTANCE = new Simulation();
 
     private Simulation() {};
@@ -17,12 +19,13 @@ public final class Simulation {
 
     public double timeScale = 1.0;
     public double timeStep = 1.0 / 60.0;
+    public double soften = 1e-3;
 
     private double accumulatedDeltaTime = 0.0;
     private double totalTime = 0.0;
 
-    private void step() {
-        double dt =  timeStep * timeScale;
+    public void step() {
+        double dt = timeStep * timeScale;
         totalTime += dt;
 
         for (ISimulationObject simulationObject : simulationObjects) {
@@ -45,6 +48,10 @@ public final class Simulation {
         if (simulationObject instanceof IGravitySource) {
             gravitySources.add((IGravitySource) simulationObject);
         }
+    }
+
+    public Array<IGravitySource> getGravitySources() {
+        return gravitySources;
     }
 
 }

@@ -20,6 +20,32 @@ public class Vector2 {
         this.y = vector.y;
     }
 
+    public double distance_squared(Vector2 vector) {
+        double dx = x - vector.x;
+        double dy = y - vector.y;
+        return dx * dx + dy * dy;
+    }
+
+    public double distance(Vector2 vector) {
+        double dx = x - vector.x;
+        double dy = y - vector.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    public double magnitude() {
+        return Math.sqrt(x * x + y * y);
+    }
+
+    public Vector2 normalize() {
+        double mag = magnitude();
+        return new Vector2(x / mag, y / mag);
+    }
+
+    public Vector2 set_magnitude(double new_magnitude) {
+        double scale = new_magnitude / magnitude();
+        return new Vector2(x * scale, y * scale);
+    }
+
     public Vector2 add(Vector2 other) {
         return new Vector2(x + other.x, y + other.y);
     }
