@@ -18,7 +18,7 @@ public final class Simulation implements IRenderListener {
     private final Array<ISimulationObject> simulationObjects = new Array<>();
     private final Array<IGravitySource> gravitySources = new Array<>();
 
-    public double timeScale = 2.0;
+    public double timeScale = 1.0;
     public double timeStep = 1.0 / 60.0;
     public double soften = 1e-3;
 
@@ -26,7 +26,7 @@ public final class Simulation implements IRenderListener {
     private double totalTime = 0.0;
 
     public void step() {
-        double dt = timeStep * timeScale;
+        double dt = timeStep;
         totalTime += dt;
 
         for (ISimulationObject simulationObject : simulationObjects) {
@@ -35,7 +35,7 @@ public final class Simulation implements IRenderListener {
     }
 
     public void onRender(double dt) {
-        accumulatedDeltaTime += dt;
+        accumulatedDeltaTime += dt * timeScale;
 
         while (accumulatedDeltaTime >= timeStep) {
             step();

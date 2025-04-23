@@ -2,11 +2,14 @@ package com.me.orbitsim.rendering;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.me.orbitsim.core.EventManager;
 import com.me.orbitsim.core.IRenderListener;
 import com.me.orbitsim.core.IResizeListener;
+import com.me.orbitsim.core.InputManager;
 import com.me.orbitsim.math.Vector2;
 
 public class CameraHandler extends InputAdapter implements IRenderListener, IResizeListener {
@@ -23,7 +26,7 @@ public class CameraHandler extends InputAdapter implements IRenderListener, IRes
         EventManager.addResizeListener(this);
         camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(0,0,0);
-        Gdx.input.setInputProcessor(this);
+        InputManager.getInstance().addProcessor(this);
     }
 
     @Override
